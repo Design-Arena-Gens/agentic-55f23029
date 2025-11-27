@@ -1,0 +1,152 @@
+/* Luxury Black Theme */
+:root {
+  --bg: #050507;
+  --bg-elev: #0b0b10;
+  --text: #e9e6e0;
+  --muted: #aaa59a;
+  --gold: #d4af37;
+  --amber: #ffcc70;
+  --warm: #ffd9a8;
+  --accent: #9c7c2b;
+  --shadow: 0 40px 100px rgba(0,0,0,0.85);
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: radial-gradient(1200px 800px at 50% -200px, #0f0f14 0%, var(--bg) 55%) fixed;
+  color: var(--text);
+  font-family: 'Cormorant Garamond', ui-serif, Georgia, 'Times New Roman', serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Header & Brand */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: linear-gradient(to bottom, rgba(5,5,7,0.9), rgba(5,5,7,0.6) 60%, rgba(5,5,7,0));
+  backdrop-filter: blur(4px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 18px 20px 10px;
+}
+.brand {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text);
+  opacity: 0.95;
+  font-size: clamp(14px, 2.2vw, 16px);
+}
+
+/* Garland (cable + lights) */
+.lights-garland {
+  position: relative;
+  height: 78px;
+  margin-top: 10px;
+}
+.garland-cable {
+  position: absolute;
+  inset: 0 0 8px 0;
+  width: 100%;
+  height: 100%;
+}
+.lights {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Bulb styling */
+.light-bulb {
+  position: absolute;
+  width: 14px;
+  height: 22px;
+  transform: translate(-50%, -50%);
+  border-radius: 9px 9px 12px 12px;
+  background: var(--warm);
+  box-shadow: inset 0 -6px 10px rgba(0,0,0,0.45), 0 0 0.001px rgba(0,0,0,0);
+  filter: drop-shadow(0 4px 3px rgba(0,0,0,0.45));
+}
+.light-bulb::before {
+  content: '';
+  position: absolute;
+  top: -7px; left: 50%; transform: translateX(-50%);
+  width: 10px; height: 8px; border-radius: 2px 2px 0 0;
+  background: #24303a; box-shadow: 0 1px 0 rgba(255,255,255,0.06) inset;
+}
+.light-bulb::after {
+  content: '';
+  position: absolute; inset: -20px -20px -10px -20px; border-radius: 50%;
+  background: radial-gradient(circle at 50% 45%, currentColor 0%, transparent 50%);
+  opacity: 0.0; filter: blur(10px);
+}
+
+/* Use motion path for elegant arc if supported */
+@supports (offset-path: path('M 0 0, 100 100')) {
+  .light-bulb {
+    offset-path: path('M 0 45 C 20 5 80 5 100 45');
+    offset-rotate: 0deg;
+    left: auto; top: auto; /* Position via offset-distance */
+    transform: translate(-50%, -50%) rotate(2deg);
+  }
+  .light-bulb[data-p] { offset-distance: attr(data-p percentage); }
+}
+
+/* Fallback layout: evenly spaced along the width */
+@supports not (offset-path: path('M 0 0, 100 100')) {
+  .light-bulb[data-p] {
+    left: calc(attr(data-p percentage) * 1%);
+    top: 45%;
+  }
+}
+
+/* Color themes */
+.light-bulb.gold { color: #ffd385; background: linear-gradient(#fff1c2, #f5c552 60%, #c49a2d); }
+.light-bulb.amber { color: #ffb84d; background: linear-gradient(#ffe2ba, #ffb34b 60%, #d8891e); }
+.light-bulb.warm { color: #ffe9c9; background: linear-gradient(#fff4db, #ffd9a8 60%, #cfa46a); }
+
+/* Twinkle animation */
+@keyframes twinkle {
+  0%, 100% { filter: brightness(0.92); box-shadow: inset 0 -6px 10px rgba(0,0,0,0.45); }
+  50% { filter: brightness(1.22); box-shadow: inset 0 -4px 8px rgba(0,0,0,0.35); }
+}
+@keyframes glow {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.8; }
+}
+.light-bulb.animate {
+  animation: twinkle var(--twinkle, 2.6s) ease-in-out infinite;
+}
+.light-bulb.animate::after {
+  animation: glow var(--glow, 2.6s) ease-in-out infinite;
+}
+
+/* Main hero */
+.main { min-height: calc(100vh - 88px); display: grid; place-items: center; padding: 2vh 2vw 8vh; }
+.hero-tree {
+  margin: 0; max-width: min(92vw, 1400px); width: 100%;
+  filter: drop-shadow(0 80px 140px rgba(0,0,0,0.95)) drop-shadow(0 20px 40px rgba(212, 175, 55, 0.08));
+}
+.hero-tree img {
+  display: block; width: 100%; height: auto; max-height: 86vh; object-fit: contain; object-position: center bottom;
+  border-radius: 18px; border: 1px solid rgba(255,255,255,0.06);
+  background: linear-gradient(180deg, rgba(212,175,55,0.05), rgba(0,0,0,0.0));
+}
+
+/* Subtle luxe accents */
+.hero-tree img {
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.03) inset, 0 14px 60px rgba(156,124,43,0.15);
+}
+
+@media (max-width: 720px) {
+  .lights-garland { height: 66px; }
+  .light-bulb { width: 12px; height: 18px; }
+  .brand { letter-spacing: 0.16em; }
+}
